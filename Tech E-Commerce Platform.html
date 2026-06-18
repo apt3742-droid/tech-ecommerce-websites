@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)file:///C:/Users/de/OneDrive/Desktop/TechStore%20-%20E-Commerce%20Platform.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - E-Commerce Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0066ff;
+            --secondary-color: #00d4ff;
+            --dark-bg: #0a0e27;
+            --card-bg: #1a1f3a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-color: #2d3748;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0052cc;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--card-bg);
+            border-color: var(--primary-color);
+        }
+
+        .badge {
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem 20px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-tab.active {
+            color: var(--primary-color);
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Login Section */
+        .login-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .login-box {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .login-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .login-box p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Shop Section */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .product-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .product-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .product-stock {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Cart Section */
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--dark-bg);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            padding: 0.5rem;
+        }
+
+        .quantity-selector button {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .quantity-selector span {
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .cart-summary {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 14px;
+        }
+
+        .summary-row.total {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+
+        /* Orders Section */
+        .orders-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .order-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .order-id {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .order-status {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-processing {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .status-in-transit {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .status-delivered {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .order-details {
+            margin-bottom: 1rem;
+        }
+
+        .order-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 14px;
+        }
+
+        .order-items {
+            background-color: var(--dark-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Admin Section */
+        .admin-container {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .admin-panel {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+        }
+
+        .admin-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .admin-product-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .admin-product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--dark-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .admin-product-info {
+            flex: 1;
+        }
+
+        .admin-product-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .admin-product-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .nav-tabs {
+                gap: 1rem;
+            }
+
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-product-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .mt-4 {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">⚡ TechStore</div>
+            <div class="nav-buttons" id="authButtons" style="display: flex;">
+                <button class="btn-primary" onclick="switchUser(&#39;customer&#39;)">Customer Login</button>
+                <button class="btn-secondary" onclick="switchUser(&#39;admin&#39;)">Admin Panel</button>
+            </div>
+            <div class="nav-buttons" id="userButtons" style="display: none;">
+                <span id="userGreeting"></span>
+                <div id="cartBadgeContainer" style="display: none;">
+                    <span class="badge" id="cartBadge">0</span>
+                </div>
+                <button class="btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs" id="navTabs" style="display: none;">
+        <button class="nav-tab" onclick="switchTab(&#39;shop&#39;)">Shop</button>
+        <button class="nav-tab" onclick="switchTab(&#39;cart&#39;)">Shopping Cart</button>
+        <button class="nav-tab" onclick="switchTab(&#39;orders&#39;)">Orders &amp; Tracking</button>
+    </div>
+
+    <div class="nav-tabs" id="adminTabs" style="display: none;">
+        <button class="nav-tab" onclick="switchTab(&#39;admin-products&#39;)">Product Management</button>
+        <button class="nav-tab" onclick="switchTab(&#39;admin-orders&#39;)">Manage Orders</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Login Section -->
+            <div id="login" class="section active">
+                <div class="login-container">
+                    <div class="login-box">
+                        <h3>👤 Customer Login</h3>
+                        <p>Browse products and place orders</p>
+                        <button class="btn-primary" onclick="switchUser(&#39;customer&#39;)">Login as Customer</button>
+                    </div>
+                    <div class="login-box">
+                        <h3>⚙️ Admin Panel</h3>
+                        <p>Manage products and orders</p>
+                        <button class="btn-primary" onclick="switchUser(&#39;admin&#39;)">Login as Admin</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shop Section -->
+            <div id="shop" class="section">
+                <h2 style="margin-bottom: 2rem;">Featured Products</h2>
+                <div class="products-grid" id="productsGrid">
+                <div class="product-card">
+                    <div class="product-image">💻</div>
+                    <div class="product-body">
+                        <div class="product-title">Wireless Laptop</div>
+                        <div class="product-description">15-inch FHD display, Intel i7, 16GB RAM</div>
+                        <div class="product-stock">Stock: <strong>5</strong></div>
+                        <div class="product-footer">
+                            <div class="product-price">₹999.00</div>
+                            <button class="btn-primary" onclick="addToCart(1)">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="product-card">
+                    <div class="product-image">🖱️</div>
+                    <div class="product-body">
+                        <div class="product-title">USB Mouse</div>
+                        <div class="product-description">Ergonomic wireless mouse</div>
+                        <div class="product-stock">Stock: <strong>50</strong></div>
+                        <div class="product-footer">
+                            <div class="product-price">₹25.00</div>
+                            <button class="btn-primary" onclick="addToCart(2)">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="product-card">
+                    <div class="product-image">⌨️</div>
+                    <div class="product-body">
+                        <div class="product-title">Mechanical Keyboard</div>
+                        <div class="product-description">RGB backlit mechanical keyboard</div>
+                        <div class="product-stock">Stock: <strong>15</strong></div>
+                        <div class="product-footer">
+                            <div class="product-price">₹120.00</div>
+                            <button class="btn-primary" onclick="addToCart(3)">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="product-card">
+                    <div class="product-image">🖥️</div>
+                    <div class="product-body">
+                        <div class="product-title">Monitor 27"</div>
+                        <div class="product-description">4K Resolution, 144Hz</div>
+                        <div class="product-stock">Stock: <strong>8</strong></div>
+                        <div class="product-footer">
+                            <div class="product-price">₹299.00</div>
+                            <button class="btn-primary" onclick="addToCart(4)">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="product-card">
+                    <div class="product-image">🔌</div>
+                    <div class="product-body">
+                        <div class="product-title">USB Hub</div>
+                        <div class="product-description">7-port USB 3.0 hub</div>
+                        <div class="product-stock">Stock: <strong>30</strong></div>
+                        <div class="product-footer">
+                            <div class="product-price">₹45.00</div>
+                            <button class="btn-primary" onclick="addToCart(5)">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="product-card">
+                    <div class="product-image">📹</div>
+                    <div class="product-body">
+                        <div class="product-title">Webcam Pro</div>
+                        <div class="product-description">4K Ultra HD with auto-focus</div>
+                        <div class="product-stock">Stock: <strong>20</strong></div>
+                        <div class="product-footer">
+                            <div class="product-price">₹89.00</div>
+                            <button class="btn-primary" onclick="addToCart(6)">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- Cart Section -->
+            <div id="cart" class="section">
+                <h2 style="margin-bottom: 2rem;">Shopping Cart</h2>
+                <div class="cart-container">
+                    <div class="cart-items" id="cartItems"><div class="empty-state"><div class="empty-state-icon">🛒</div><p>Your cart is empty</p></div></div>
+                    <div class="cart-summary">
+                        <h3 style="margin-bottom: 1.5rem;">Order Summary</h3>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">₹0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span id="shipping">₹50.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (10%):</span>
+                            <span id="tax">₹0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="total">₹0.00</span>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="checkout()">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="orders" class="section">
+                <h2 style="margin-bottom: 2rem;">Your Orders &amp; Tracking</h2>
+                <div class="orders-container" id="ordersContainer">
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">ORD001</div>
+                            <div style="font-size: 13px; color: var(--text-secondary);">Placed on 2026-05-15</div>
+                        </div>
+                        <div class="order-status status-delivered">DELIVERED</div>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-detail-row">
+                            <span style="color: var(--text-secondary);">Tracking ID:</span>
+                            <span style="font-weight: 600;">TRACK001</span>
+                        </div>
+                    </div>
+                    <div class="order-items">
+                        
+                            <div class="order-item">
+                                <span>Laptop (×1)</span>
+                                <span>₹999.00</span>
+                            </div>
+                        
+                        <div style="border-top: 1px solid var(--border-color); margin-top: 0.5rem; padding-top: 0.5rem; display: flex; justify-content: space-between; font-weight: 600; color: var(--primary-color);">
+                            <span>Total:</span>
+                            <span>₹1049.00</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">ORD002</div>
+                            <div style="font-size: 13px; color: var(--text-secondary);">Placed on 2026-05-10</div>
+                        </div>
+                        <div class="order-status status-in-transit">IN-TRANSIT</div>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-detail-row">
+                            <span style="color: var(--text-secondary);">Tracking ID:</span>
+                            <span style="font-weight: 600;">TRACK002</span>
+                        </div>
+                    </div>
+                    <div class="order-items">
+                        
+                            <div class="order-item">
+                                <span>Mouse (×2)</span>
+                                <span>₹50.00</span>
+                            </div>
+                        
+                        <div style="border-top: 1px solid var(--border-color); margin-top: 0.5rem; padding-top: 0.5rem; display: flex; justify-content: space-between; font-weight: 600; color: var(--primary-color);">
+                            <span>Total:</span>
+                            <span>₹100.00</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            </div>
+
+            <!-- Admin Products Section -->
+            <div id="admin-products" class="section">
+                <div class="admin-container">
+                    <div class="admin-panel">
+                        <h3 class="admin-title">Add New Product</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <input type="text" id="productName" placeholder="e.g., Wireless Laptop">
+                            </div>
+                            <div class="form-group">
+                                <label>Price (₹)</label>
+                                <input type="number" id="productPrice" placeholder="999" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Stock Quantity</label>
+                                <input type="number" id="productStock" placeholder="10" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select id="productCategory">
+                                    <option>Electronics</option>
+                                    <option>Accessories</option>
+                                    <option>Software</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="productDescription" placeholder="Product description..."></textarea>
+                        </div>
+                        <button class="btn-primary" onclick="addProduct()">Add Product</button>
+                    </div>
+
+                    <div class="admin-panel">
+                        <h3 class="admin-title">Manage Products</h3>
+                        <div class="admin-product-list" id="adminProductList">
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <div class="admin-product-name">💻 Wireless Laptop</div>
+                        <div class="admin-product-details">₹999.00 | Stock: 5 | Category: Electronics</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn-secondary" onclick="deleteProduct(1)">Delete</button>
+                    </div>
+                </div>
+            
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <div class="admin-product-name">🖱️ USB Mouse</div>
+                        <div class="admin-product-details">₹25.00 | Stock: 50 | Category: Accessories</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn-secondary" onclick="deleteProduct(2)">Delete</button>
+                    </div>
+                </div>
+            
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <div class="admin-product-name">⌨️ Mechanical Keyboard</div>
+                        <div class="admin-product-details">₹120.00 | Stock: 15 | Category: Accessories</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn-secondary" onclick="deleteProduct(3)">Delete</button>
+                    </div>
+                </div>
+            
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <div class="admin-product-name">🖥️ Monitor 27"</div>
+                        <div class="admin-product-details">₹299.00 | Stock: 8 | Category: Electronics</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn-secondary" onclick="deleteProduct(4)">Delete</button>
+                    </div>
+                </div>
+            
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <div class="admin-product-name">🔌 USB Hub</div>
+                        <div class="admin-product-details">₹45.00 | Stock: 30 | Category: Accessories</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn-secondary" onclick="deleteProduct(5)">Delete</button>
+                    </div>
+                </div>
+            
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <div class="admin-product-name">📹 Webcam Pro</div>
+                        <div class="admin-product-details">₹89.00 | Stock: 20 | Category: Electronics</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn-secondary" onclick="deleteProduct(6)">Delete</button>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Orders Section -->
+            <div id="admin-orders" class="section">
+                <h2 style="margin-bottom: 2rem;">All Customer Orders</h2>
+                <div class="orders-container" id="adminOrdersContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 TechStore. All rights reserved.</p>
+        <p>Professional E-Commerce Solution</p>
+    </footer>
+
+    <script>
+        // Data Storage
+        let currentUser = null;
+        let isAdmin = false;
+        let products = [
+            { id: 1, name: 'Wireless Laptop', price: 999, stock: 5, category: 'Electronics', description: '15-inch FHD display, Intel i7, 16GB RAM', emoji: '💻' },
+            { id: 2, name: 'USB Mouse', price: 25, stock: 50, category: 'Accessories', description: 'Ergonomic wireless mouse', emoji: '🖱️' },
+            { id: 3, name: 'Mechanical Keyboard', price: 120, stock: 15, category: 'Accessories', description: 'RGB backlit mechanical keyboard', emoji: '⌨️' },
+            { id: 4, name: 'Monitor 27"', price: 299, stock: 8, category: 'Electronics', description: '4K Resolution, 144Hz', emoji: '🖥️' },
+            { id: 5, name: 'USB Hub', price: 45, stock: 30, category: 'Accessories', description: '7-port USB 3.0 hub', emoji: '🔌' },
+            { id: 6, name: 'Webcam Pro', price: 89, stock: 20, category: 'Electronics', description: '4K Ultra HD with auto-focus', emoji: '📹' }
+        ];
+        let cart = [];
+        let orders = [
+            { id: 'ORD001', date: '2026-05-15', items: [{name: 'Laptop', qty: 1, price: 999}], total: 1049, status: 'delivered', tracking: 'TRACK001' },
+            { id: 'ORD002', date: '2026-05-10', items: [{name: 'Mouse', qty: 2, price: 25}], total: 100, status: 'in-transit', tracking: 'TRACK002' }
+        ];
+
+        // Authentication
+        function switchUser(role) {
+            currentUser = `User_${Math.random().toString(36).substr(2, 5)}`;
+            isAdmin = role === 'admin';
+            updateUI();
+            switchTab(isAdmin ? 'admin-products' : 'shop');
+        }
+
+        function logout() {
+            currentUser = null;
+            isAdmin = false;
+            cart = [];
+            updateUI();
+            switchTab('shop');
+        }
+
+        // UI Updates
+        function updateUI() {
+            const authButtons = document.getElementById('authButtons');
+            const userButtons = document.getElementById('userButtons');
+            const navTabs = document.getElementById('navTabs');
+            const adminTabs = document.getElementById('adminTabs');
+
+            if (currentUser) {
+                authButtons.style.display = 'none';
+                userButtons.style.display = 'flex';
+                document.getElementById('userGreeting').textContent = `${isAdmin ? '⚙️ Admin' : '👤 ' + currentUser}`;
+                navTabs.style.display = isAdmin ? 'none' : 'flex';
+                adminTabs.style.display = isAdmin ? 'flex' : 'none';
+                switchTab(isAdmin ? 'admin-products' : 'shop');
+            } else {
+                authButtons.style.display = 'flex';
+                userButtons.style.display = 'none';
+                navTabs.style.display = 'none';
+                adminTabs.style.display = 'none';
+                switchTab('login');
+            }
+            updateCartBadge();
+            renderProducts();
+            renderCart();
+            renderOrders();
+            renderAdminProducts();
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event?.target?.classList.add('active');
+        }
+
+        // Product Management
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(p => `
+                <div class="product-card">
+                    <div class="product-image">${p.emoji}</div>
+                    <div class="product-body">
+                        <div class="product-title">${p.name}</div>
+                        <div class="product-description">${p.description}</div>
+                        <div class="product-stock">Stock: <strong>${p.stock}</strong></div>
+                        <div class="product-footer">
+                            <div class="product-price">₹${p.price.toFixed(2)}</div>
+                            <button class="btn-primary" ${p.stock === 0 ? 'disabled' : ''} onclick="addToCart(${p.id})">
+                                ${p.stock === 0 ? 'Out' : 'Add'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addProduct() {
+            const name = document.getElementById('productName').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const stock = parseInt(document.getElementById('productStock').value);
+            const category = document.getElementById('productCategory').value;
+            const description = document.getElementById('productDescription').value;
+
+            if (name && price && stock !== null) {
+                products.push({
+                    id: Math.max(...products.map(p => p.id), 0) + 1,
+                    name, price, stock, category, description,
+                    emoji: ['💻', '🖱️', '⌨️', '🖥️', '🔌', '📹'][Math.floor(Math.random() * 6)]
+                });
+                document.getElementById('productName').value = '';
+                document.getElementById('productPrice').value = '';
+                document.getElementById('productStock').value = '';
+                document.getElementById('productDescription').value = '';
+                renderAdminProducts();
+                renderProducts();
+                alert('Product added successfully!');
+            } else {
+                alert('Please fill all fields');
+            }
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            renderAdminProducts();
+            renderProducts();
+        }
+
+        function renderAdminProducts() {
+            const list = document.getElementById('adminProductList');
+            list.innerHTML = products.map(p => `
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <div class="admin-product-name">${p.emoji} ${p.name}</div>
+                        <div class="admin-product-details">₹${p.price.toFixed(2)} | Stock: ${p.stock} | Category: ${p.category}</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn-secondary" onclick="deleteProduct(${p.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cart Management
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push({...product, qty: 1});
+            }
+            updateCartBadge();
+            renderCart();
+            alert(`${product.name} added to cart!`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartBadge();
+            renderCart();
+        }
+
+        function updateCartQty(productId, qty) {
+            if (qty <= 0) {
+                removeFromCart(productId);
+            } else {
+                const item = cart.find(i => i.id === productId);
+                if (item) item.qty = qty;
+                renderCart();
+            }
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🛒</div><p>Your cart is empty</p></div>';
+                return;
+            }
+
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.emoji} ${item.name}</div>
+                        <div class="cart-item-price">₹${item.price.toFixed(2)} × ${item.qty}</div>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="quantity-selector">
+                            <button onclick="updateCartQty(${item.id}, ${item.qty - 1})">−</button>
+                            <span>${item.qty}</span>
+                            <button onclick="updateCartQty(${item.id}, ${item.qty + 1})">+</button>
+                        </div>
+                        <button class="btn-secondary" onclick="removeFromCart(${item.id})">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+
+            updateCartSummary();
+        }
+
+        function updateCartSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const shipping = 50;
+            const tax = subtotal * 0.1;
+            const total = subtotal + shipping + tax;
+
+            document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `₹${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `₹${total.toFixed(2)}`;
+        }
+
+        function updateCartBadge() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartBadge').textContent = count;
+            document.getElementById('cartBadgeContainer').style.display = count > 0 && currentUser && !isAdmin ? 'block' : 'none';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Cart is empty');
+                return;
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const shipping = 50;
+            const tax = subtotal * 0.1;
+            const total = subtotal + shipping + tax;
+
+            const order = {
+                id: `ORD${String(orders.length + 1).padStart(3, '0')}`,
+                date: new Date().toISOString().split('T')[0],
+                items: cart.map(item => ({name: item.name, qty: item.qty, price: item.price})),
+                total: Math.round(total * 100) / 100,
+                status: 'processing',
+                tracking: `TRACK${Math.random().toString().substr(2, 6)}`
+            };
+
+            orders.push(order);
+            cart = [];
+            updateCartBadge();
+            renderCart();
+            renderOrders();
+            alert(`Order placed! Order ID: ${order.id}`);
+        }
+
+        // Orders Management
+        function renderOrders() {
+            const userOrders = isAdmin ? orders : orders;
+            const container = isAdmin ? document.getElementById('adminOrdersContainer') : document.getElementById('ordersContainer');
+
+            if (userOrders.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No orders yet</p></div>';
+                return;
+            }
+
+            container.innerHTML = userOrders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">${order.id}</div>
+                            <div style="font-size: 13px; color: var(--text-secondary);">Placed on ${order.date}</div>
+                        </div>
+                        <div class="order-status status-${order.status}">${order.status.toUpperCase()}</div>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-detail-row">
+                            <span style="color: var(--text-secondary);">Tracking ID:</span>
+                            <span style="font-weight: 600;">${order.tracking}</span>
+                        </div>
+                    </div>
+                    <div class="order-items">
+                        ${order.items.map(item => `
+                            <div class="order-item">
+                                <span>${item.name} (×${item.qty})</span>
+                                <span>₹${(item.price * item.qty).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                        <div style="border-top: 1px solid var(--border-color); margin-top: 0.5rem; padding-top: 0.5rem; display: flex; justify-content: space-between; font-weight: 600; color: var(--primary-color);">
+                            <span>Total:</span>
+                            <span>₹${order.total.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    ${isAdmin ? `<div style="margin-top: 1rem;">
+                        <label style="font-size: 12px; color: var(--text-secondary);">Update Status:</label>
+                        <select style="margin-top: 0.5rem; width: 100%;" onchange="updateOrderStatus('${order.id}', this.value)">
+                            <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
+                            <option value="in-transit" ${order.status === 'in-transit' ? 'selected' : ''}>In Transit</option>
+                            <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                        </select>
+                    </div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                renderOrders();
+                alert('Order status updated!');
+            }
+        }
+
+        // Initialize
+        updateUI();
+    </script>
+
+</body></html>
